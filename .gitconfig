@@ -4,10 +4,10 @@
 	name = Andy Christianson
 	email = nix@nixxed.com
 [core]
-	editor = micro 
+	editor = micro
 	autocrlf = input
 [alias]
-	main-branch = !git symbolic-ref refs/remotes/origin/HEAD | cut -d'/' -f4'
+	main-branch = !git symbolic-ref refs/remotes/origin/HEAD | cut -d'/' -f4
 	ca = !git add -A && git commit
 	ci = commit
 	cl = clone
