@@ -34,7 +34,8 @@
 	ap = apply
 	l = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative
 	dmb = "!f() { git checkout --quiet $(git main-branch) && git branch --merged | grep --invert-match '\\*' | xargs -n 1 git branch --delete; git checkout --quiet @{-1}; }; f"
-	up = !git checkout $(git main-branch) && git branch --set-upstream-to=upstream/$(git main-branch) && git pull && git push origin $(git main-branch) && git dmb
+	dsb = "!f() { git checkout -q $(git main-branch) && git for-each-ref refs/heads/ \"--format=%(refname:short)\" | while read branch; do mergeBase=$(git merge-base $(git main-branch) $branch) && [[ $(git cherry $(git main-branch) $(git commit-tree $(git rev-parse \"$branch^{tree}\") -p $mergeBase -m _)) == \"-\"* ]] && git branch -D $branch; done }; f"
+	up = !git checkout $(git main-branch) && git branch --set-upstream-to=upstream/$(git main-branch) && git pull && git push origin $(git main-branch) && git dmb && git dsb
 	setup = "!f() { git remote add upstream $1 && git fetch --all && git up;}; f"
 [push]
 	default = simple
